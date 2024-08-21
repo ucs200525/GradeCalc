@@ -14,6 +14,7 @@
             height: 100vh;
             margin: 0;
             padding: 0 15px;
+            overflow-x: hidden;
         }
 
         .container {
@@ -23,6 +24,8 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            max-height: 100vh;
+            overflow-y: auto;
         }
 
         h1 {
@@ -89,6 +92,13 @@
             background-color: #218838;
         }
 
+        #courses {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding-right: 5px;
+        }
+
         #result {
             margin-top: 20px;
             font-weight: bold;
@@ -106,7 +116,7 @@
         <h1>Grade Calculator</h1>
         <div class="controls">
             <label for="courseCount">Number of Courses:</label>
-            <input type="number" id="courseCount" min="1" value="1">
+            <input type="number" id="courseCount" min="1" max="200" value="1">
             <button type="button" class="add-course-button" onclick="addCourses()">Add Courses</button>
         </div>
         <form id="gradeForm">
@@ -137,6 +147,7 @@
 
         function addCourses() {
             const numberOfCourses = parseInt(document.getElementById('courseCount').value);
+ 
             const coursesContainer = document.getElementById('courses');
             coursesContainer.innerHTML = ''; // Clear previous courses
 
@@ -184,6 +195,13 @@
             const gpa = totalGradePoints / totalCredits;
             document.getElementById('result').textContent = `Your GPA is: ${gpa.toFixed(2)}`;
         }
+
+        // Enforce the maximum limit directly on the input field
+        document.getElementById('courseCount').addEventListener('input', function() {
+            if (this.value > 200) {
+                this.value = 200;
+            }
+        });
     </script>
 </body>
 </html>
