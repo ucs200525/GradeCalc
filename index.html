@@ -121,7 +121,7 @@
         </div>
         <form id="gradeForm">
             <div id="courses">
-                <div class="course">
+                <div class="course" id="course1">
                     <label for="grade1">Grade:</label>
                     <select id="grade1" name="grade1" required>
                         <option value="10">S</option>
@@ -147,9 +147,14 @@
 
         function addCourses() {
             const numberOfCourses = parseInt(document.getElementById('courseCount').value);
- 
+            if (numberOfCourses > 200) {
+                alert("You cannot add more than 200 courses.");
+                return;
+            }
+
             const coursesContainer = document.getElementById('courses');
             coursesContainer.innerHTML = ''; // Clear previous courses
+            courseCount = 0; // Reset course count
 
             for (let i = 1; i <= numberOfCourses; i++) {
                 addSingleCourse();
@@ -159,8 +164,15 @@
         function addSingleCourse() {
             courseCount++;
 
+            if (courseCount > 200) {
+                alert("You cannot add more than 200 courses.");
+                courseCount = 200;
+                return;
+            }
+
             const courseDiv = document.createElement('div');
             courseDiv.classList.add('course');
+            courseDiv.id = `course${courseCount}`;
             courseDiv.innerHTML = `
                 <label for="grade${courseCount}">Grade:</label>
                 <select id="grade${courseCount}" name="grade${courseCount}" required>
@@ -185,11 +197,16 @@
             let totalGradePoints = 0;
 
             for (let i = 1; i <= courseCount; i++) {
-                const credits = parseFloat(document.getElementById(`credits${i}`).value);
-                const grade = parseFloat(document.getElementById(`grade${i}`).value);
+                const gradeElement = document.getElementById(`grade${i}`);
+                const creditsElement = document.getElementById(`credits${i}`);
 
-                totalCredits += credits;
-                totalGradePoints += credits * grade;
+                if (gradeElement && creditsElement) {
+                    const credits = parseFloat(creditsElement.value);
+                    const grade = parseFloat(gradeElement.value);
+
+                    totalCredits += credits;
+                    totalGradePoints += credits * grade;
+                }
             }
 
             const gpa = totalGradePoints / totalCredits;
