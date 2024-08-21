@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 15px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 14px;
+            width: 60px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .add-course-button {
+            background-color: #28a745;
+        }
+
+        .add-course-button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e0f7fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grade Calculator</h1>
+        <div class="controls">
+            <label for="courseCount">Number of Courses:</label>
+            <input type="number" id="courseCount" min="1" value="1">
+            <button type="button" class="add-course-button" onclick="addCourses()">Add Courses</button>
+        </div>
+        <form id="gradeForm">
+            <div id="courses">
+                <div class="course">
+                    <label for="grade1">Grade:</label>
+                    <select id="grade1" name="grade1" required>
+                        <option value="10">S</option>
+                        <option value="9">A</option>
+                        <option value="8">B</option>
+                        <option value="7">C</option>
+                        <option value="6">D</option>
+                        <option value="5">E</option>
+                        <option value="0">F</option>
+                    </select>
+
+                    <label for="credits1">Credits:</label>
+                    <input type="number" id="credits1" name="credits1" required>
+                </div>
+            </div>
+            <button type="button" onclick="addSingleCourse()">Add Single Course</button>
+            <button type="button" onclick="calculateGPA()">Calculate GPA</button>
+        </form>
+        <p id="result"></p>
+    </div>
+    <script>
+        let courseCount = 1;
+
+        function addCourses() {
+            const numberOfCourses = parseInt(document.getElementById('courseCount').value);
+            const coursesContainer = document.getElementById('courses');
+            coursesContainer.innerHTML = ''; // Clear previous courses
+
+            for (let i = 1; i <= numberOfCourses; i++) {
+                addSingleCourse();
+            }
+        }
+
+        function addSingleCourse() {
+            courseCount++;
+
+            const courseDiv = document.createElement('div');
+            courseDiv.classList.add('course');
+            courseDiv.innerHTML = `
+                <label for="grade${courseCount}">Grade:</label>
+                <select id="grade${courseCount}" name="grade${courseCount}" required>
+                    <option value="10">S</option>
+                    <option value="9">A</option>
+                    <option value="8">B</option>
+                    <option value="7">C</option>
+                    <option value="6">D</option>
+                    <option value="5">E</option>
+                    <option value="0">F</option>
+                </select>
+
+                <label for="credits${courseCount}">Credits:</label>
+                <input type="number" id="credits${courseCount}" name="credits${courseCount}" required>
+            `;
+
+            document.getElementById('courses').appendChild(courseDiv);
+        }
+
+        function calculateGPA() {
+            let totalCredits = 0;
+            let totalGradePoints = 0;
+
+            for (let i = 1; i <= courseCount; i++) {
+                const credits = parseFloat(document.getElementById(`credits${i}`).value);
+                const grade = parseFloat(document.getElementById(`grade${i}`).value);
+
+                totalCredits += credits;
+                totalGradePoints += credits * grade;
+            }
+
+            const gpa = totalGradePoints / totalCredits;
+            document.getElementById('result').textContent = `Your GPA is: ${gpa.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
