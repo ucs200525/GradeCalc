@@ -29,6 +29,22 @@ body {
     align-items: center;
 }
 
+/* Mobile responsiveness: adjust container width for small screens */
+@media (max-width: 768px) {
+    .main-container {
+        max-width: 320px; /* Decrease width on smaller devices */
+        padding: 0 15px;  /* Add padding for breathing space */
+    }
+
+    .container {
+        padding: 25px; /* Reduce padding slightly */
+    }
+
+    h1 {
+        font-size: 22px; /* Adjust title size for smaller screens */
+    }
+}
+
 .container {
     background-color: #ffffff; /* White background for the form */
     padding: 35px;
