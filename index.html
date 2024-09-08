@@ -5,143 +5,199 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Calculator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 0 15px;
-            overflow-x: hidden;
-        }
+/* Use Google Fonts for a modern look */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            max-height: 100vh;
-            overflow-y: auto;
-        }
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eaf6ff; /* Light, airy blue background */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+    padding-top: 30px;
+}
 
-        h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+.main-container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+.container {
+    background-color: #ffffff; /* White background for the form */
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
 
-        .course {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #f2f2f2;
-            border-radius: 5px;
-        }
+h1 {
+    font-size: 28px;
+    color: #2c3e50; /* Dark gray-blue for text */
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
 
-        label {
-            font-size: 14px;
-            color: #555;
-        }
+.controls, .course {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-        select, input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: white;
-            font-size: 14px;
-            width: 60px;
-            text-align: center;
-        }
+.course {
+    padding: 12px;
+    background-color: #f4f9ff; /* Very light blue for course input */
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
-        button {
-            padding: 12px;
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
+label {
+    font-size: 14px;
+    color: #34495e;
+}
 
-        button:hover {
-            background-color: #0056b3;
-        }
+select, input {
+    padding: 10px;
+    border: 1px solid #ccd1d9; /* Softer border for inputs */
+    border-radius: 5px;
+    background-color: #eef2f5; /* Light gray background for inputs */
+    font-size: 14px;
+    width: 70px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
 
-        .add-course-button {
-            background-color: #28a745;
-        }
+select:focus, input:focus {
+    border-color: #3498db; /* Brighter blue focus color */
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); /* Blue outline */
+}
 
-        .add-course-button:hover {
-            background-color: #218838;
-        }
+button {
+    padding: 12px;
+    background-color: #3498db; /* Vibrant blue for buttons */
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-        #courses {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            padding-right: 5px;
-        }
+button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    box-shadow: 0 6px 15px rgba(41, 128, 185, 0.3);
+    transform: translateY(-2px);
+}
 
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #333;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #e0f7fa;
-        }
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-course-button {
+    background-color: #3498db; /* Keep this blue to match the theme */
+}
+
+.add-course-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+.last-controls {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;  
+}
+
+#courses {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #2c3e50;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #d1ecf1; /* Light cyan background for GPA result */
+    color: #155774; /* Darker cyan for text */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Add some extra styles for a more polished look */
+input:hover, select:hover {
+    background-color: #e1e8ec; /* Slight hover effect on inputs */
+}
+
+input:focus, select:focus {
+    background-color: #ffffff; /* Brighter background on focus */
+    border-color: #27ae60; /* Optional green border on focus */
+}
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Grade Calculator</h1>
-        <div class="controls">
-            <label for="courseCount">Number of Courses:</label>
-            <input type="number" id="courseCount" min="1" max="200" value="1">
-            <button type="button" class="add-course-button" onclick="addCourses()">Add Courses</button>
-        </div>
-        <form id="gradeForm">
-            <div id="courses">
-                <div class="course" id="course1">
-                    <label for="grade1">Grade:</label>
-                    <select id="grade1" name="grade1" required>
-                        <option value="10">S</option>
-                        <option value="9">A</option>
-                        <option value="8">B</option>
-                        <option value="7">C</option>
-                        <option value="6">D</option>
-                        <option value="5">E</option>
-                        <option value="0">F</option>
-                    </select>
-
-                    <label for="credits1">Credits:</label>
-                    <input type="number" id="credits1" name="credits1" required>
-                </div>
+    <div class="main-container">
+        <div class="container">
+            <h1>Grade Calculator</h1>
+            <div class="controls">
+                <label for="courseCount">Number of Courses:</label>
+                <input type="number" id="courseCount" min="1" max="200" value="1">
+                <button type="button" class="add-course-button" onclick="addCourses()">Add Courses</button>
             </div>
-            <button type="button" onclick="addSingleCourse()">Add Single Course</button>
-            <button type="button" onclick="calculateGPA()">Calculate GPA</button>
-        </form>
-        <p id="result"></p>
+            <form id="gradeForm">
+                <div id="courses">
+                    <div class="course" id="course1">
+                        <label for="grade1">Grade:</label>
+                        <select id="grade1" name="grade1" required>
+                            <option value="10">S</option>
+                            <option value="9">A</option>
+                            <option value="8">B</option>
+                            <option value="7">C</option>
+                            <option value="6">D</option>
+                            <option value="5">E</option>
+                            <option value="0">F</option>
+                        </select>
+                        <label for="credits1">Credits:</label>
+                        <input type="number" id="credits1" name="credits1" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Move the .last-controls inside the main-container to align it under the form -->
+        <div class="last-controls">
+            <button type="button" class="add-course-button" onclick="addSingleCourse()">Add Single Course</button>
+            <button type="button" class="add-course-button" onclick="calculateGPA()">Calculate GPA</button>
+            <p id="result"></p>
+        </div>
     </div>
+</body>
+
     <script>
         let courseCount = 1;
 
